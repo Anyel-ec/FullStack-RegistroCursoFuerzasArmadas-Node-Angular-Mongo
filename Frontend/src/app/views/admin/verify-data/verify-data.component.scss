@@ -1,0 +1,96 @@
+
+:host {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(60deg, rgba(84,58,183,1) 0%, rgba(0,172,193,1) 100%);
+  font-family: "Ubuntu", sans-serif;
+  padding-top: 5rem; 
+}
+
+.card {
+  width: 90%; 
+  margin-top: 2rem; 
+  margin-bottom: 2rem; 
+  background: white; 
+  padding: 2rem; 
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1); 
+  border-radius: 10px; 
+}
+.btn_success {
+  border: none;
+  background: none;
+  padding: 2px;
+  cursor: pointer;
+  outline: none;
+}
+.btn_danger {
+  border: none;
+  background: none;
+  padding: 2px;
+  cursor: pointer;
+  outline: none;
+}
+
+.btn_success p-tag {
+  display: inline-block;
+  transition: transform 0.2s ease-in-out;
+}
+
+.btn_success p-tag:hover {
+  transform: scale(1.05);
+}
+
+.btn_success p-tag:active {
+  transform: scale(0.95);
+}
+
+.btn_search {
+  border: none;
+  background-color: #2563EB;
+  cursor: pointer;
+  border-radius: 45%;
+  width: 50px;
+  height: 50px;
+}
+
+.btn_search .pi-search {
+  color: white;
+  font-size: 2rem;
+  transition: transform 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+
+.btn_search:hover .pi-search {
+  transform: scale(1.2);
+}
+
+.btn_search:active .pi-search {
+  transform: scale(1.3);
+}
+
+
+.dialog-content-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+
+td, th {
+  padding: 1rem; 
+}
+
+button:disabled {
+  opacity: 0.5; 
+  cursor: not-allowed; 
+}
+
+button.disabled {
+  opacity: 0.5; 
+  cursor: not-allowed; 
+}
+
+

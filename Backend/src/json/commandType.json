@@ -1,0 +1,22 @@
+[
+    {
+        "_id": 1,
+        "name": "Policía Nacional"
+    },
+    {
+        "_id": 2,
+        "name": "Bombero"
+    },
+    {
+        "_id": 3,
+        "name": "Policía de Tránsito"
+    },
+    {
+        "_id": 4,
+        "name": "Militar"
+    },
+    {
+        "_id": 5,
+        "name": "Marino"
+    }
+]

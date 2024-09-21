@@ -1,0 +1,102 @@
+<div class="card">
+  <p-table
+    #dt
+    [value]="filteredData"
+    [paginator]="true"
+    [rows]="5"
+    [tableStyle]="{ 'min-width': '50rem' }"
+  >
+    <ng-template pTemplate="caption">
+      <div class="flex">
+        <div class="p-inputgroup ml-auto">
+          <span class="p-inputgroup-addon">
+            <i class="pi pi-search"></i>
+          </span>
+          <input
+            pInputText
+            type="text"
+            (input)="filterGlobal($event)"
+            placeholder="Buscar"
+          />
+        </div>
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="header">
+      <tr style="text-align: center">
+        <th pSortableColumn="cedula">
+          Cédula <p-sortIcon field="cedula"></p-sortIcon>
+        </th>
+        <th pSortableColumn="nombresCompletos">
+          Nombre Completo <p-sortIcon field="nombresCompletos"></p-sortIcon>
+        </th>
+        <th pSortableColumn="genero">
+          Género <p-sortIcon field="genero"></p-sortIcon>
+        </th>
+        <th pSortableColumn="provincia">
+          Provincia <p-sortIcon field="provincia"></p-sortIcon>
+        </th>
+        <th pSortableColumn="tipoCurso">
+          Tipo de Curso <p-sortIcon field="tipoCurso"></p-sortIcon>
+        </th>
+        <th>Estado</th>
+        <th>Acciones</th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-rowData>
+      <tr>
+        <td style="text-align: center">{{ rowData.cedula }}</td>
+        <td style="text-align: center">{{ rowData.nombresCompletos }}</td>
+        <td style="text-align: center">{{ rowData.genero }}</td>
+        <td style="text-align: center">{{ rowData.provincia }}</td>
+        <td style="text-align: center">{{ rowData.tipoCurso }}</td>
+        <td style="text-align: center">
+          <p-tag
+            *ngIf="rowData.estado === 'Aprobado'"
+            icon="pi pi-check"
+            severity="success"
+            value="Aceptado"
+          ></p-tag>
+          <p-tag
+            *ngIf="rowData.estado === 'Rechazado'"
+            icon="pi pi-times"
+            severity="danger"
+            value="Rechazado"
+          ></p-tag>
+          <p-tag
+            *ngIf="rowData.estado === 'Pendiente'"
+            icon="pi pi-spin pi-spinner"
+            severity="warning"
+            value="Pendiente"
+          ></p-tag>
+        </td>
+        <td style="text-align: center">
+          <button
+            class="btn_success"
+            (click)="aceptar(rowData)"
+            [disabled]="rowData.estado !== 'Pendiente'"
+          >
+            <p-tag
+              icon="pi pi-check"
+              severity="success"
+              value="Aceptar"
+            ></p-tag>
+          </button>
+
+          <button
+            class="btn_danger"
+            (click)="rechazar(rowData)"
+            [disabled]="rowData.estado !== 'Pendiente'"
+          >
+            <p-tag
+              icon="pi pi-times"
+              severity="danger"
+              value="Rechazar"
+            ></p-tag>
+          </button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

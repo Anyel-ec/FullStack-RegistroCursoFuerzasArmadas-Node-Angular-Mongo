@@ -1,0 +1,317 @@
+<app-header></app-header>
+<app-card-image></app-card-image>
+<div
+  class="container d-flex justify-content-center align-items-center min-vh-100 mt-5"
+>
+  <div class="col-md-8">
+    <form (ngSubmit)="save($event)" [formGroup]="form" class="formulario">
+      <div class="formulario__text">
+        <h1 class="formulario__header">
+          Formulario de Inscripción a Fuerzas Armadas
+        </h1>
+        <div class="formulario__bar"></div>
+        <div class="row">
+          <!-- Cédula -->
+          <div class="col-md-6 form-group position-relative mb-3">
+            <label>Cédula<span class="text-danger">*</span>:</label>
+            <input
+              type="text"
+              maxlength="10"
+              class="form-control"
+              formControlName="identification"
+              (blur)="markAsTouched('identification')"
+              (input)="filterOnlyNumbers($event)"
+              [ngClass]="{
+                'is-invalid': isInvalid('identification'),
+                'is-valid': isValid('identification')
+              }"
+              pattern="[0-9]*"
+              inputmode="numeric"
+            />
+            <small
+              *ngIf="getError('identification', 'required')"
+              class="text-danger"
+              >El campo es obligatorio</small
+            >
+            <small
+              *ngIf="getError('identification', 'cedulaInvalida')"
+              class="text-danger"
+              >Cédula inválida</small
+            >
+          </div>
+
+          <!-- Número de Celular -->
+          <div class="col-md-6 form-group position-relative mb-3">
+            <label>Número de Celular<span class="text-danger">*</span>:</label>
+            <input
+              type="text"
+              maxlength="10"
+              class="form-control"
+              formControlName="phone"
+              (blur)="markAsTouched('phone')"
+              (input)="filterOnlyNumbers($event)"
+              [ngClass]="{
+                'is-invalid': isInvalid('phone'),
+                'is-valid': isValid('phone')
+              }"
+              pattern="[0-9]*"
+            />
+            <small *ngIf="getError('phone', 'required')" class="text-danger"
+              >El campo es obligatorio</small
+            >
+            <small
+              *ngIf="getError('phone', 'telefonoInvalido')"
+              class="text-danger"
+              >Número de celular inválido</small
+            >
+          </div>
+        </div>
+
+        <div class="row">
+          <!-- Correo Electrónico -->
+          <div class="col-md-6 form-group position-relative mb-3">
+            <label>Correo Electrónico<span class="text-danger">*</span>:</label>
+            <input
+              type="email"
+              class="form-control"
+              formControlName="email"
+              (blur)="markAsTouched('email')"
+              [ngClass]="{
+                'is-invalid': isInvalid('email'),
+                'is-valid': isValid('email')
+              }"
+            />
+            <small *ngIf="getError('email', 'required')" class="text-danger"
+              >El campo es obligatorio</small
+            >
+            <small
+              *ngIf="getError('email', 'correoInvalido')"
+              class="text-danger"
+              >Correo electrónico inválido</small
+            >
+          </div>
+
+          <!-- Nombre Completo -->
+          <div class="col-md-6 form-group position-relative mb-3">
+            <label>Nombre Completo<span class="text-danger">*</span>:</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="name"
+              (blur)="markAsTouched('name')"
+              (input)="filterOnlyLetters($event)"
+              maxlength="100"
+              minlength="3"
+              [ngClass]="{
+                'is-invalid': isInvalid('name'),
+                'is-valid': isValid('name')
+              }"
+            />
+            <small *ngIf="getError('name', 'required')" class="text-danger"
+              >El campo es obligatorio</small
+            >
+            <small *ngIf="getError('name', 'minlength')" class="text-danger"
+              >El nombre debe tener al menos 3 caracteres</small
+            >
+            <small *ngIf="getError('name', 'maxlength')" class="text-danger"
+              >El nombre no puede exceder los 100 caracteres</small
+            >
+            <small
+              *ngIf="getError('name', 'nombreInvalido')"
+              class="text-danger"
+              >Nombre inválido</small
+            >
+          </div>
+        </div>
+
+        <div class="row">
+          <!-- Fecha de Nacimiento -->
+          <div class="col-md-6 form-group position-relative mb-3">
+            <label
+              >Fecha de Nacimiento<span class="text-danger">*</span>:</label
+            >
+            <input
+              type="date"
+              class="form-control custom-date-input"
+              formControlName="birthdate"
+              (blur)="markAsTouched('birthdate')"
+              [ngClass]="{
+                'is-invalid': isInvalid('birthdate'),
+                'is-valid': isValid('birthdate')
+              }"
+            />
+            <small *ngIf="getError('birthdate', 'required')" class="text-danger"
+              >El campo es obligatorio</small
+            >
+            <small
+              *ngIf="getError('birthdate', 'edadInvalida')"
+              class="text-danger"
+              >Debe tener al menos 18 años y menos de 50</small
+            >
+          </div>
+
+          <!-- Provincia -->
+          <div class="col-md-6 form-group position-relative mb-3">
+            <label>Provincia<span class="text-danger">*</span>:</label>
+            <select
+              class="form-control"
+              formControlName="id_province"
+              (blur)="markAsTouched('id_province')"
+              [ngClass]="{
+                'is-invalid': isInvalid('id_province'),
+                'is-valid': isValid('id_province')
+              }"
+            >
+              <option value="">Seleccione una provincia</option>
+              <option
+                *ngFor="let provincia of provinces"
+                [value]="provincia._id"
+              >
+                {{ provincia.nombre }}
+              </option>
+            </select>
+            <small
+              *ngIf="getError('id_province', 'required')"
+              class="text-danger"
+              >El campo es obligatorio</small
+            >
+          </div>
+        </div>
+
+        <div class="row">
+          <!-- Dirección -->
+          <div class="col-md-6 form-group position-relative mb-3">
+            <label>Dirección<span class="text-danger">*</span>:</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="address"
+              (blur)="markAsTouched('address')"
+              [ngClass]="{
+                'is-invalid': isInvalid('address'),
+                'is-valid': isValid('address')
+              }"
+            />
+            <small *ngIf="getError('address', 'required')" class="text-danger"
+              >El campo es obligatorio</small
+            >
+            <small *ngIf="getError('address', 'minlength')" class="text-danger"
+              >La dirección debe tener al menos 10 caracteres</small
+            >
+            <small *ngIf="getError('address', 'maxlength')" class="text-danger"
+              >La dirección no puede exceder los 100 caracteres</small
+            >
+          </div>
+
+          <!-- Género -->
+          <div class="col-md-6 form-group position-relative mb-3">
+            <label>Género<span class="text-danger">*</span>:</label>
+            <select
+              class="form-control"
+              formControlName="id_gender"
+              (blur)="markAsTouched('id_gender')"
+              [ngClass]="{
+                'is-invalid': isInvalid('id_gender'),
+                'is-valid': isValid('id_gender')
+              }"
+            >
+              <option value="">Seleccione un género</option>
+              <option *ngFor="let gender of genders" [value]="gender._id">
+                {{ gender.name }}
+              </option>
+            </select>
+            <small *ngIf="getError('id_gender', 'required')" class="text-danger"
+              >El campo es obligatorio</small
+            >
+          </div>
+        </div>
+
+        <div class="row">
+          <!-- Tipo de Comando -->
+          <div class="col-md-6 form-group position-relative mb-3">
+            <label>Tipo de Comando<span class="text-danger">*</span>:</label>
+            <select
+              class="form-control"
+              formControlName="id_commandType"
+              (blur)="markAsTouched('id_commandType')"
+              [ngClass]="{
+                'is-invalid': isInvalid('id_commandType'),
+                'is-valid': isValid('id_commandType')
+              }"
+            >
+              <option value="">Seleccione un comando</option>
+              <option
+                *ngFor="let commandType of commandTypes"
+                [value]="commandType._id"
+              >
+                {{ commandType.name }}
+              </option>
+            </select>
+            <small
+              *ngIf="getError('id_commandType', 'required')"
+              class="text-danger"
+              >El campo es obligatorio</small
+            >
+          </div>
+
+          <!-- Nota de Grado sobre 20 Pts -->
+          <div class="col-md-6 form-group position-relative mb-3">
+            <label
+              >Nota de Grado sobre 20 Puntos<span class="text-danger">*</span
+              >:</label
+            >
+            <input
+              type="number"
+              class="form-control"
+              formControlName="gradeNote"
+              (blur)="markAsTouched('gradeNote')"
+              [ngClass]="{
+                'is-invalid': isInvalid('gradeNote'),
+                'is-valid': isValid('gradeNote')
+              }"
+              min="0"
+              max="20"
+            />
+            <small *ngIf="getError('gradeNote', 'required')" class="text-danger"
+              >El campo es obligatorio</small
+            >
+            <small *ngIf="getError('gradeNote', 'min')" class="text-danger"
+              >La nota debe ser mayor o igual a 0</small
+            >
+            <small *ngIf="getError('gradeNote', 'max')" class="text-danger"
+              >La nota no puede exceder los 20 puntos</small
+            >
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 offset-md-3">
+            <!-- recaptcha con la clave del sitio-->
+            <div class="mb-3">
+              <div class="d-flex justify-content-center">
+                <re-captcha
+                  (resolved)="resolved($event)"
+                  siteKey="6LcCnvYpAAAAANhQwPdVNrZkKoHrdoUeURM5khPJ"
+                ></re-captcha>
+              </div>
+              <div
+                *ngIf="!captchaValid && form.get('captcha')?.touched"
+                class="text-danger"
+              >
+                <small>Completa el reCAPTCHA</small>
+              </div>
+            </div>
+
+            <button
+              class="btn btn-primary w-100"
+              [disabled]="form.invalid || !captchaValid"
+              type="submit"
+            >
+              ENVIAR
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

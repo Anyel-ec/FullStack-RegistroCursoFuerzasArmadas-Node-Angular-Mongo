@@ -1,0 +1,32 @@
+<div class="main">
+  <p class="sign" align="center">Iniciar Sesión</p>
+  <form class="form1" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <input
+      class="un"
+      type="text"
+      align="center"
+      placeholder="Usuario"
+      id="username"
+      formControlName="username"
+    />
+    <div *ngIf="loginForm.get('username')?.invalid && (loginForm.get('username')?.dirty || loginForm.get('username')?.touched)">
+      <small class="error-message" *ngIf="loginForm.get('username')?.errors?.['required']">
+        El usuario es requerido.
+      </small>
+    </div>
+    <input
+      class="pass"
+      type="{{ hidePassword ? 'password' : 'text' }}"
+      align="center"
+      placeholder="Contraseña"
+      id="password"
+      formControlName="password"
+    />
+    <div *ngIf="loginForm.get('password')?.invalid && (loginForm.get('password')?.dirty || loginForm.get('password')?.touched)">
+      <small class="error-message" *ngIf="loginForm.get('password')?.errors?.['required']">
+        La contraseña es requerida.
+      </small>
+    </div>
+    <button class="submit" type="submit" align="center">Ingresar</button>
+  </form>
+</div>

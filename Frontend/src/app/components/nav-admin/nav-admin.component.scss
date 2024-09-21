@@ -1,0 +1,36 @@
+:host ::ng-deep .p-menubar {
+  justify-content: center;
+  background-color: rgb(255, 255, 255);
+  border: none;
+  border-bottom-left-radius: 90%;
+  border-bottom-right-radius: 90%;
+  display: flex;
+}
+
+:host ::ng-deep .p-menubar .p-menubar-start {
+  display: flex;
+  align-items: center;
+  margin-right: auto;
+}
+
+:host ::ng-deep .p-menubar .p-menubar-end {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+
+:host ::ng-deep .p-menubar .p-menuitem-link {
+  color: inherit;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+:host ::ng-deep .p-menubar .p-menuitem-link .pi {
+  color: black;
+}
+
+:host ::ng-deep .p-menubar .p-menuitem a.p-menuitem-link:hover {
+  color: #ffd70a !important;
+}

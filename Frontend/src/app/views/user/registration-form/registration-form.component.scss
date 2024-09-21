@@ -1,0 +1,134 @@
+@import url("https://fonts.googleapis.com/css2?family=Baloo+2&display=swap");
+
+$main-green: #79dd09 !default;
+$main-green-rgb-015: rgba(121, 221, 9, 0.1) !default;
+$main-yellow: #bdbb49 !default;
+$main-yellow-rgb-015: rgba(189, 187, 73, 0.1) !default;
+$main-red: #bd150b !default;
+$main-red-rgb-015: rgba(189, 21, 11, 0.1) !default;
+$main-blue: #0076bd !default;
+$main-blue-rgb-015: rgba(0, 118, 189, 0.1) !default;
+
+/* General Styles */
+body {
+  font-family: "Baloo 2", cursive;
+  font-size: 16px;
+  color: #ffffff;
+  text-rendering: optimizeLegibility;
+  font-weight: initial;
+}
+
+.dark {
+  background: #110f16;
+}
+
+.light {
+  background: #f3f5f7;
+}
+
+a,
+a:hover {
+  text-decoration: none;
+  transition: color 0.3s ease-in-out;
+}
+
+#pageHeaderTitle {
+  margin: 2rem 0;
+  text-transform: uppercase;
+  text-align: center;
+  font-size: 2.5rem;
+}
+
+/* Form Styles */
+.formulario {
+  flex-wrap: wrap;
+  display: flex;
+  box-shadow: 0 4px 21px -12px rgba(0, 0, 0, 0.66);
+  border-radius: 10px;
+  margin: 0 0 2rem 0;
+  overflow: hidden;
+  position: relative;
+  color: #18151f;
+  // con degraddo el backounrg
+
+  .formulario__header {
+    font-size: 1.75rem;
+    color: #0076bd;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+
+  .formulario__bar {
+    width: 40px;
+    height: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    background-color: #d7da41;
+    transition: width 0.2s ease;
+  }
+
+  .formulario__text {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .formulario__text .form-group {
+    margin-bottom: 1.5rem;
+  }
+
+  .formulario__tagbox {
+    display: flex;
+    flex-flow: row wrap;
+    font-size: 14px;
+    margin: 20px 0 0 0;
+    padding: 0;
+    justify-content: center;
+  }
+}
+
+.formulario__text input,
+.formulario__text select {
+  border-radius: 5px;
+  border: 1px solid #ced4da;
+  padding: 10px;
+  width: 100%;
+  transition: border-color 0.3s;
+}
+
+.formulario__text input:focus,
+.formulario__text select:focus {
+  border-color: #0076bd;
+}
+
+.formulario__text .is-invalid {
+  border-color: #e3342f;
+}
+
+.formulario__text .is-valid {
+  border-color: #38c172;
+}
+
+/* On Hover */
+.formulario:hover .formulario__bar {
+  width: 100px;
+}
+
+@media screen and (min-width: 769px) {
+  .formulario {
+    flex-wrap: inherit;
+
+    .formulario__header {
+      font-size: 2rem;
+    }
+
+    .formulario__text {
+      padding: 3rem;
+    }
+  }
+}
+
+.custom-date-input::-webkit-calendar-picker-indicator {
+  display: none;
+}

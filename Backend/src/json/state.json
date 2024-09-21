@@ -1,0 +1,14 @@
+[
+    {
+        "_id": 1,
+        "name": "pendiente"
+    },
+    {
+        "_id": 2,
+        "name": "aprobado"
+    },
+    {
+        "_id": 3,
+        "name": "rechazado"
+    }
+]

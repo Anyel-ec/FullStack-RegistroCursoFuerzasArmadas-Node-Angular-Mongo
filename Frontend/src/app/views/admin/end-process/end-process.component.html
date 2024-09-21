@@ -1,0 +1,178 @@
+<div class="card">
+  <div class="table-header">
+    <button class="btn_success" (click)="updateTable()">
+      <p-tag icon="pi pi-refresh" severity="secondary" value="Refrescar" />
+    </button>
+  </div>
+  <p-table
+    #dt
+    [value]="filteredData"
+    [paginator]="true"
+    [rows]="5"
+    [tableStyle]="{ 'min-width': '50rem' }"
+  >
+    <ng-template pTemplate="caption">
+      <div class="flex">
+        <div class="p-inputgroup ml-auto">
+          <span class="p-inputgroup-addon">
+            <i class="pi pi-search"></i>
+          </span>
+          <input
+            pInputText
+            type="text"
+            (input)="filterGlobal($event)"
+            placeholder="Buscar"
+          />
+        </div>
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="header">
+      <tr style="text-align: center">
+        <th pSortableColumn="cedula">
+          Cédula <p-sortIcon field="cedula"></p-sortIcon>
+        </th>
+        <th pSortableColumn="nombresCompletos">
+          Nombres Completos <p-sortIcon field="nombresCompletos"></p-sortIcon>
+        </th>
+        <th pSortableColumn="genero">
+          Tipo de Curso <p-sortIcon field="genero"></p-sortIcon>
+        </th>
+        <th pSortableColumn="tipoCurso">
+          Nota de Grado <p-sortIcon field="tipoCurso"></p-sortIcon>
+        </th>
+        <th>Documento</th>
+        <th pSortableColumn="estado">
+          Estado <p-sortIcon field="estado"></p-sortIcon>
+        </th>
+        <th>Acciones</th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-rowData>
+      <tr>
+        <td style="text-align: center">{{ rowData.cedula }}</td>
+        <td style="text-align: center">{{ rowData.nombresCompletos }}</td>
+        <td style="text-align: center">{{ rowData.tipoCurso }}</td>
+        <td style="text-align: center">{{ rowData.notaGrado }}</td>
+        <td style="text-align: center">
+          <p-tag
+            *ngIf="rowData.estadoDocumento === 'Pendiente'"
+            icon="pi pi-file"
+            severity="warning"
+            value="Pendiente"
+          ></p-tag>
+          <button
+            class="btn_success"
+            *ngIf="rowData.estadoDocumento === 'Aprobado'"
+            type="button"
+            (click)="verComprobante(rowData)"
+          >
+            <p-tag
+              icon="pi pi-file-check"
+              severity="success"
+              value="Revisar"
+            ></p-tag>
+          </button>
+          <button
+            *ngIf="rowData.estadoVerificacion === 'Pendiente'"
+            class="btn_success"
+            (click)="reenviarEnlaceAlert(rowData)"
+          >
+            <p-tag icon="pi pi-file-arrow-up" severity="info" />
+          </button>
+        </td>
+        <td style="text-align: center">
+          <p-tag
+            *ngIf="rowData.estadoVerificacion === 'Pendiente'"
+            icon="pi pi-spin pi-spinner"
+            severity="warning"
+            value="Pendiente"
+          ></p-tag>
+          <p-tag
+            *ngIf="rowData.estadoVerificacion === 'Aprobado'"
+            icon="pi pi-verified"
+            severity="success"
+            value="Aceptado"
+          ></p-tag>
+          <p-tag
+            *ngIf="rowData.estadoVerificacion === 'Rechazado'"
+            icon="pi pi-times-circle"
+            severity="danger"
+            value="Rechazado"
+          ></p-tag>
+        </td>
+        <td style="text-align: center">
+          <div *ngIf="rowData.estadoVerificacion === 'Pendiente'">
+            <button class="btn_success" (click)="aceptar(rowData)">
+              <p-tag icon="pi pi-check" severity="success" value="Aceptar" />
+            </button>
+
+            <button class="btn_success" (click)="rechazar(rowData)">
+              <p-tag icon="pi pi-times" severity="danger" value="Rechazar" />
+            </button>
+          </div>
+
+          <div
+            *ngIf="
+              rowData.estadoVerificacion === 'Aprobado' ||
+              rowData.estadoVerificacion === 'Rechazado'
+            "
+          >
+            <button
+              class="btn_success"
+              (click)="aceptar(rowData)"
+              style="cursor: not-allowed"
+              disabled
+            >
+              <p-tag icon="pi pi-check" severity="success" value="Aceptar" />
+            </button>
+
+            <button
+              class="btn_success"
+              (click)="rechazar(rowData)"
+              style="cursor: not-allowed"
+              disabled
+            >
+              <p-tag icon="pi pi-times" severity="danger" value="Rechazar" />
+            </button>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+<p-dialog
+  header="Nota de Grado"
+  [modal]="true"
+  [(visible)]="Comprobante"
+  [style]="{ width: '50rem' }"
+  [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
+  [draggable]="false"
+>
+  <div class="dialog-content-center">
+    <ng-container *ngIf="selectedDocument">
+      <ng-container
+        *ngIf="
+          selectedDocument.typeDocument.startsWith('image/');
+          else pdfTemplate
+        "
+      >
+        <p-image
+          [src]="selectedDocumentUrl"
+          alt="Image"
+          width="250"
+          [preview]="true"
+        />
+      </ng-container>
+      <ng-template #pdfTemplate>
+        <iframe
+          [src]="selectedDocumentUrl"
+          width="100%"
+          height="600px"
+        ></iframe>
+      </ng-template>
+    </ng-container>
+  </div>
+</p-dialog>

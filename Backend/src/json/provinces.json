@@ -1,0 +1,98 @@
+[
+    {
+        "_id": 1,
+        "nombre": "Azuay"
+    },
+    {
+        "_id": 2,
+        "nombre": "Bolívar"
+    },
+    {
+        "_id": 3,
+        "nombre": "Cañar"
+    },
+    {
+        "_id": 4,
+        "nombre": "Carchi"
+    },
+    {
+        "_id": 5,
+        "nombre": "Chimborazo"
+    },
+    {
+        "_id": 6,
+        "nombre": "Cotopaxi"
+    },
+    {
+        "_id": 7,
+        "nombre": "El Oro"
+    },
+    {
+        "_id": 8,
+        "nombre": "Esmeraldas"
+    },
+    {
+        "_id": 9,
+        "nombre": "Galápagos"
+    },
+    {
+        "_id": 10,
+        "nombre": "Guayas"
+    },
+    {
+        "_id": 11,
+        "nombre": "Imbabura"
+    },
+    {
+        "_id": 12,
+        "nombre": "Loja"
+    },
+    {
+        "_id": 13,
+        "nombre": "Los Ríos"
+    },
+    {
+        "_id": 14,
+        "nombre": "Manabí"
+    },
+    {
+        "_id": 15,
+        "nombre": "Morona Santiago"
+    },
+    {
+        "_id": 16,
+        "nombre": "Napo"
+    },
+    {
+        "_id": 17,
+        "nombre": "Orellana"
+    },
+    {
+        "_id": 18,
+        "nombre": "Pastaza"
+    },
+    {
+        "_id": 19,
+        "nombre": "Pichincha"
+    },
+    {
+        "_id": 20,
+        "nombre": "Santa Elena"
+    },
+    {
+        "_id": 21,
+        "nombre": "Santo Domingo de los Tsáchilas"
+    },
+    {
+        "_id": 22,
+        "nombre": "Sucumbíos"
+    },
+    {
+        "_id": 23,
+        "nombre": "Tungurahua"
+    },
+    {
+        "_id": 24,
+        "nombre": "Zamora-Chinchipe"
+    }
+]
