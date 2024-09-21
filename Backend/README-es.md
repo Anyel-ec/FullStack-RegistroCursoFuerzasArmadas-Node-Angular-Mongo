@@ -1,160 +1,105 @@
-# Backend NodeJS Express MongoDB
+# Backend API for Register and Verify Data System
 
-Este es un proyecto de backend para un sistema avanzado de programación, utilizando Node.js, Express y MongoDB. El proyecto incluye diversas rutas y controladores para manejar registros de usuarios, autenticación, carga de documentos y verificación de datos.
+## Descripción
 
-## Tabla de Contenidos
+Este proyecto es una API backend que gestiona el registro de usuarios, la verificación de datos, la carga de documentos y el envío de notificaciones por correo electrónico. La API interactúa con una base de datos MongoDB y permite realizar operaciones CRUD sobre colecciones como `registers`, `verifyData`, `uploadDocument`, y más.
 
-- [Instalación](#instalación)
-- [Configuración](#configuración)
-- [Estructura del Proyecto](#estructura-del-proyecto)
-- [Rutas](#rutas)
-- [Ejemplos de Uso](#ejemplos-de-uso)
-- [Contribución](#contribución)
-- [Licencia](#licencia)
+## Tecnologías
+
+- **Node.js**: Entorno de ejecución del servidor.
+- **Express.js**: Framework para la creación del servidor web.
+- **MongoDB**: Base de datos NoSQL.
+- **Multer**: Middleware para la gestión de archivos.
+- **Nodemailer**: Envío de correos electrónicos.
+- **dotenv**: Manejo de variables de entorno.
+- **Joi**: Validación de datos.
 
 ## Instalación
 
-1. Clonar el repositorio:
+1. Clona el repositorio:
 
-    ```sh
-    git clone https://github.com/Anyel-ec/Backend-NodeJS-RestAPI-Advanced-Programming.git
-    cd Backend-NodeJS-RestAPI-Advanced-Programming
+    ```bash
+    git clone https://github.com/Anyel-ec/FullStack-ProcesoRegistroCursoFuerzasArmadas-NodeJS-Angular18-MongoDB
     ```
 
-2. Instalar las dependencias:
+2. Instala las dependencias:
 
-    ```sh
+    ```bash
+    cd FullStack-ProcesoRegistroCursoFuerzasArmadas-NodeJS-Angular18-MongoDB
     npm install
     ```
 
-3. Crear un archivo `.env` en la raíz del proyecto con la siguiente configuración:
+3. Crea un archivo `.env` en la raíz del proyecto con las siguientes variables:
 
     ```env
     PORT=3000
-    MONGO_URI=your_mongodb_uri
-    SECRET_KEY=your_secret_key
+    MONGODB_URI=mongodb://localhost:27017/your_db
+    EMAIL_USER=tu_correo@gmail.com
+    EMAIL_PASS=tu_contraseña
     ```
 
-## Configuración
+4. Inicia el servidor:
 
-El proyecto utiliza un cargador de variables de entorno personalizado y se conecta a una base de datos MongoDB. Asegúrate de configurar correctamente tu archivo `.env` con las variables necesarias.
+    ```bash
+    npm start
+    ```
+
+El servidor se ejecutará en `http://localhost:3000`.
+
+## Endpoints
+
+### Registro de Usuarios
+
+- **GET /api/registers**: Obtiene todos los registros.
+- **GET /api/registers/:id**: Obtiene un registro por su ID.
+- **POST /api/registers**: Crea un nuevo registro.
+- **PUT /api/registers/:id**: Actualiza un registro por su ID.
+- **DELETE /api/registers/:id**: Elimina un registro.
+
+### Verificación de Datos
+
+- **GET /api/verifyData**: Obtiene todos los datos de verificación.
+- **GET /api/verifyData/:id**: Obtiene los datos de verificación por ID.
+- **POST /api/verifyData**: Crea nuevos datos de verificación.
+- **PUT /api/verifyData/:id**: Actualiza los datos de verificación por ID.
+- **DELETE /api/verifyData/:id**: Elimina los datos de verificación.
+
+### Carga de Documentos
+
+- **POST /api/uploadDocument/:id**: Carga un documento asociado a un registro de verificación.
+- **PUT /api/uploadDocument/:id**: Actualiza un documento existente.
+- **GET /api/uploadDocument/:id**: Obtiene un documento por ID.
+
+### Usuarios
+
+- **GET /api/users**: Obtiene todos los usuarios.
+- **POST /api/users**: Crea un nuevo usuario.
 
 ## Estructura del Proyecto
 
 ```
 ├── src
 │   ├── config
-│   │   ├── db.js
-│   │   └── environment.js
-│   ├── controller
-│   │   ├── loadDataController.js
-│   │   ├── registerController.js
-│   │   ├── sendEmailController.js
-│   │   ├── uploadDocumentController.js
-│   │   ├── userController.js
-│   │   ├── verifyDataController.js
-│   │   └── verifyDocumentsController.js
-│   ├── middleware
-│   │   └── registerMiddleware.js
+│   │   ├── db.js             # Configuración de conexión a MongoDB
+│   │   ├── environment.js    # Carga de variables de entorno
 │   ├── routes
-│   │   ├── registerRoutes.js
+│   │   ├── registerRoutes.js # Rutas relacionadas a registros
 │   │   ├── verifyDataRoutes.js
-│   │   ├── loadDataRoutes.js
-│   │   ├── verifyDocumentRoutes.js
 │   │   ├── uploadDocumentRoutes.js
-│   │   └── userRoute.js
-│   └── utils
-│       └── validateEcuadorianID.js
-├── .env
-├── package.json
-└── index.js
+│   ├── collections
+│   │   ├── Register.js       # Modelo de registros
+│   │   ├── VerifyData.js     # Modelo de datos de verificación
+│   └── services
+│       └── emailService.js   # Servicio para envío de correos electrónicos
+├── .env                      # Variables de entorno
+├── server.js                 # Archivo principal para iniciar el servidor
 ```
 
-## Rutas
+## Validaciones
 
-### Registro de Usuarios
-
-- `GET /api/registers` - Obtener todos los registros
-- `GET /api/registers/:id` - Obtener un registro por ID
-- `GET /api/registers/identification/:identification` - Obtener un registro por identificación
-- `POST /api/registers` - Crear o actualizar un registro
-- `PUT /api/registers/:id` - Actualizar un registro por ID
-- `PUT /api/registers/identification/:identification` - Actualizar un registro por identificación
-- `DELETE /api/registers/:id` - Eliminar un registro
-
-### Autenticación de Usuarios
-
-- `POST /api/users/register` - Crear un nuevo usuario
-- `POST /api/users/login` - Autenticar un usuario
-
-### Verificación de Datos
-
-- `GET /api/verifyData` - Obtener todos los registros de verificación
-- `GET /api/verifyData/relations` - Obtener registros de verificación con datos relacionados
-- `PUT /api/verifyData/:id` - Actualizar un registro de verificación
-- `DELETE /api/verifyData/:id` - Eliminar un registro de verificación
-
-### Carga de Documentos
-
-- `PUT /api/uploadDocument/:id` - Actualizar la verificación de un documento
-
-### Otros Endpoints
-
-- `GET /api/load/gender` - Obtener géneros
-- `GET /api/load/province` - Obtener provincias
-- `GET /api/load/command` - Obtener tipos de comandos
-
-## Ejemplos de Uso
-
-### Encriptación y Desencriptación
-
-En el frontend, los datos se encriptan utilizando `CryptoJS` antes de ser enviados al servidor:
-
-```javascript
-import CryptoJS from 'crypto-js';
-
-const secretKey = 'my-secret-key';
-const encryptedPassword = CryptoJS.AES.encrypt(password, secretKey).toString();
-```
-
-En el backend, los datos se desencriptan utilizando la misma clave secreta:
-
-```javascript
-const CryptoJS = require('crypto-js');
-
-const secretKey = process.env.SECRET_KEY;
-
-function decrypt(encryptedData) {
-    const bytes = CryptoJS.AES.decrypt(encryptedData, secretKey);
-    const originalText = bytes.toString(CryptoJS.enc.Utf8);
-    return originalText;
-}
-
-// Ejemplo de desencriptación en una ruta
-app.post('/login', (req, res) => {
-    const encryptedUser = req.body.user;
-    const encryptedPassword = req.body.password;
-
-    const user = decrypt(encryptedUser);
-    const password = decrypt(encryptedPassword);
-
-    console.log('Decrypted User:', user);
-    console.log('Decrypted Password:', password);
-
-    // Lógica de autenticación...
-});
-```
-
-## Contribución
-
-Si deseas contribuir a este proyecto, por favor sigue los siguientes pasos:
-
-1. Haz un fork del repositorio.
-2. Crea una nueva rama (`git checkout -b feature/nueva-funcionalidad`).
-3. Realiza tus cambios y haz commit (`git commit -am 'Añadir nueva funcionalidad'`).
-4. Sube tu rama (`git push origin feature/nueva-funcionalidad`).
-5. Crea un Pull Request.
-
-## Licencia
-
-Este proyecto está licenciado bajo la Licencia ISC. Consulta el archivo `LICENSE` para más detalles.
+El sistema valida las entradas de los usuarios, incluyendo:
+- **Cédula de Ecuador** válida.
+- **Número de teléfono** (debe empezar con 0 y tener 10 dígitos).
+- **Correo electrónico** válido.
+- El **nombre** debe tener entre 3 y 100 caracteres.
+- Debe ser mayor de 18 años.

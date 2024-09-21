@@ -1,160 +1,105 @@
-# Backend NodeJS Express MongoDB
+# Backend API for Register and Verify Data System
 
-This is a backend project for an advanced programming system, using Node.js, Express, and MongoDB. The project includes various routes and controllers to handle user registrations, authentication, document uploads, and data verification.
+## Description
 
-## Table of Contents
+This project is a backend API that manages user registration, data verification, document uploads, and email notifications. The API interacts with a MongoDB database and allows CRUD operations on collections such as `registers`, `verifyData`, `uploadDocument`, and more.
 
-- [Installation](#installation)
-- [Configuration](#configuration)
-- [Project Structure](#project-structure)
-- [Routes](#routes)
-- [Usage Examples](#usage-examples)
-- [Contribution](#contribution)
-- [License](#license)
+## Technologies
+
+- **Node.js**: Server runtime environment.
+- **Express.js**: Framework for creating the web server.
+- **MongoDB**: NoSQL database.
+- **Multer**: Middleware for file handling.
+- **Nodemailer**: Email sending.
+- **dotenv**: Environment variable management.
+- **Joi**: Data validation.
 
 ## Installation
 
 1. Clone the repository:
 
-    ```sh
-    git clone https://github.com/Anyel-ec/Backend-NodeJS-RestAPI-Advanced-Programming.git
-    cd Backend-NodeJS-RestAPI-Advanced-Programming
+    ```bash
+    git clone https://github.com/Anyel-ec/FullStack-ProcesoRegistroCursoFuerzasArmadas-NodeJS-Angular18-MongoDB
     ```
 
-2. Install dependencies:
+2. Install the dependencies:
 
-    ```sh
+    ```bash
+    cd FullStack-ProcesoRegistroCursoFuerzasArmadas-NodeJS-Angular18-MongoDB
     npm install
     ```
 
-3. Create a `.env` file in the root of the project with the following configuration:
+3. Create a `.env` file in the project root with the following variables:
 
     ```env
     PORT=3000
-    MONGO_URI=your_mongodb_uri
-    SECRET_KEY=your_secret_key
+    MONGODB_URI=mongodb://localhost:27017/your_db
+    EMAIL_USER=your_email@gmail.com
+    EMAIL_PASS=your_password
     ```
 
-## Configuration
+4. Start the server:
 
-The project uses a custom environment variable loader and connects to a MongoDB database. Make sure to properly configure your `.env` file with the necessary variables.
+    ```bash
+    npm start
+    ```
+
+The server will run on `http://localhost:3000`.
+
+## Endpoints
+
+### User Registration
+
+- **GET /api/registers**: Get all records.
+- **GET /api/registers/:id**: Get a record by its ID.
+- **POST /api/registers**: Create a new record.
+- **PUT /api/registers/:id**: Update a record by its ID.
+- **DELETE /api/registers/:id**: Delete a record.
+
+### Data Verification
+
+- **GET /api/verifyData**: Get all verification data.
+- **GET /api/verifyData/:id**: Get verification data by ID.
+- **POST /api/verifyData**: Create new verification data.
+- **PUT /api/verifyData/:id**: Update verification data by ID.
+- **DELETE /api/verifyData/:id**: Delete verification data.
+
+### Document Uploads
+
+- **POST /api/uploadDocument/:id**: Upload a document associated with a verification record.
+- **PUT /api/uploadDocument/:id**: Update an existing document.
+- **GET /api/uploadDocument/:id**: Get a document by ID.
+
+### Users
+
+- **GET /api/users**: Get all users.
+- **POST /api/users**: Create a new user.
 
 ## Project Structure
 
 ```
 ├── src
 │   ├── config
-│   │   ├── db.js
-│   │   └── environment.js
-│   ├── controller
-│   │   ├── loadDataController.js
-│   │   ├── registerController.js
-│   │   ├── sendEmailController.js
-│   │   ├── uploadDocumentController.js
-│   │   ├── userController.js
-│   │   ├── verifyDataController.js
-│   │   └── verifyDocumentsController.js
-│   ├── middleware
-│   │   └── registerMiddleware.js
+│   │   ├── db.js             # MongoDB connection configuration
+│   │   ├── environment.js    # Load environment variables
 │   ├── routes
-│   │   ├── registerRoutes.js
+│   │   ├── registerRoutes.js # Routes related to registration
 │   │   ├── verifyDataRoutes.js
-│   │   ├── loadDataRoutes.js
-│   │   ├── verifyDocumentRoutes.js
 │   │   ├── uploadDocumentRoutes.js
-│   │   └── userRoute.js
-│   └── utils
-│       └── validateEcuadorianID.js
-├── .env
-├── package.json
-└── index.js
+│   ├── collections
+│   │   ├── Register.js       # Register model
+│   │   ├── VerifyData.js     # Verification data model
+│   └── services
+│       └── emailService.js   # Service for email sending
+├── .env                      # Environment variables
+├── server.js                 # Main file to start the server
 ```
 
-## Routes
+## Validations
 
-### User Registration
-
-- `GET /api/registers` - Get all registrations
-- `GET /api/registers/:id` - Get a registration by ID
-- `GET /api/registers/identification/:identification` - Get a registration by identification
-- `POST /api/registers` - Create or update a registration
-- `PUT /api/registers/:id` - Update a registration by ID
-- `PUT /api/registers/identification/:identification` - Update a registration by identification
-- `DELETE /api/registers/:id` - Delete a registration
-
-### User Authentication
-
-- `POST /api/users/register` - Create a new user
-- `POST /api/users/login` - Authenticate a user
-
-### Data Verification
-
-- `GET /api/verifyData` - Get all verification records
-- `GET /api/verifyData/relations` - Get verification records with related data
-- `PUT /api/verifyData/:id` - Update a verification record
-- `DELETE /api/verifyData/:id` - Delete a verification record
-
-### Document Uploads
-
-- `PUT /api/uploadDocument/:id` - Update document verification
-
-### Other Endpoints
-
-- `GET /api/load/gender` - Get genders
-- `GET /api/load/province` - Get provinces
-- `GET /api/load/command` - Get command types
-
-## Usage Examples
-
-### Encryption and Decryption
-
-In the frontend, data is encrypted using `CryptoJS` before being sent to the server:
-
-```javascript
-import CryptoJS from 'crypto-js';
-
-const secretKey = 'my-secret-key';
-const encryptedPassword = CryptoJS.AES.encrypt(password, secretKey).toString();
-```
-
-In the backend, data is decrypted using the same secret key:
-
-```javascript
-const CryptoJS = require('crypto-js');
-
-const secretKey = process.env.SECRET_KEY;
-
-function decrypt(encryptedData) {
-    const bytes = CryptoJS.AES.decrypt(encryptedData, secretKey);
-    const originalText = bytes.toString(CryptoJS.enc.Utf8);
-    return originalText;
-}
-
-// Example of decryption in a route
-app.post('/login', (req, res) => {
-    const encryptedUser = req.body.user;
-    const encryptedPassword = req.body.password;
-
-    const user = decrypt(encryptedUser);
-    const password = decrypt(encryptedPassword);
-
-    console.log('Decrypted User:', user);
-    console.log('Decrypted Password:', password);
-
-    // Authentication logic...
-});
-```
-
-## Contribution
-
-If you would like to contribute to this project, please follow these steps:
-
-1. Fork the repository.
-2. Create a new branch (`git checkout -b feature/new-feature`).
-3. Make your changes and commit them (`git commit -am 'Add new feature'`).
-4. Push your branch (`git push origin feature/new-feature`).
-5. Create a Pull Request.
-
-## License
-
-This project is licensed under the ISC License. See the `LICENSE` file for details.
+The system validates user input, including:
+- **Valid Ecuadorian ID**.
+- **Phone number** (must start with 0 and be 10 digits).
+- **Valid email**.
+- The **name** must be between 3 and 100 characters.
+- Must be at least 18 years old.
